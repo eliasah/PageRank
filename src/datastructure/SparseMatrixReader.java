@@ -55,10 +55,14 @@ public class SparseMatrixReader {
 				}
 			}
 			matrix.L[n] = j;
-
 			j = 0;
-			for (i = 0; i < matrix.L.length - 1; i++) {
-				deg = matrix.L[i + 1] - matrix.L[i];
+			for (i = 0; i < matrix.C.length; i++) {
+				// if (j == matrix.L.length -1 ) break;
+				while (i >= matrix.L[j + 1])
+					j++;
+
+				deg = matrix.L[j + 1] - matrix.L[j];
+				matrix.setC(i, (float) 1 / deg);
 			}
 
 			br.close();
