@@ -55,7 +55,8 @@ public class SparseMatrixReader {
 				}
 			}
 			matrix.L[n] = j;
-			j = 0;
+						
+			j = 0;	
 			for (i = 0; i < matrix.C.length; i++) {
 				// if (j == matrix.L.length -1 ) break;
 				while (i >= matrix.L[j + 1])
@@ -63,6 +64,7 @@ public class SparseMatrixReader {
 
 				deg = matrix.L[j + 1] - matrix.L[j];
 				matrix.setC(i, (float) 1 / deg);
+				System.out.println("i = " + i + " ,j = " + j);
 			}
 
 			br.close();
