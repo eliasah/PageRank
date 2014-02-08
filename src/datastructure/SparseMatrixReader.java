@@ -11,7 +11,7 @@ import datastructure.SparseMatrix;
 
 public class SparseMatrixReader {
 
-	public SparseMatrix matrix;
+	private SparseMatrix matrix;
 	private int m, n;
 	private String file;
 
@@ -64,12 +64,16 @@ public class SparseMatrixReader {
 
 				deg = matrix.L[j + 1] - matrix.L[j];
 				matrix.setC(i, (float) 1 / deg);
-				System.out.println("i = " + i + " ,j = " + j);
+				// System.out.println("i = " + i + " ,j = " + j);
 			}
 
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public SparseMatrix getMatrix() {
+		return matrix;
 	}
 }

@@ -7,14 +7,6 @@ public class SparseMatrix {
 	int n;
 	int m;
 
-	public SparseMatrix(int n, int m) {
-		this.C = new float[m];
-		this.L = new int[n + 1];
-		this.I = new int[m];
-		this.n = n;
-		this.m = m;
-	}
-
 	public SparseMatrix(float[][] matrice, int m) {
 		this.n = matrice.length;
 		this.m = m;
@@ -35,21 +27,41 @@ public class SparseMatrix {
 					cpt++;
 				}
 			}
-			L[i+1] = cpt;
+			L[i + 1] = cpt;
 		}
 
+	}
+
+	public SparseMatrix(int n, int m) {
+		this.C = new float[m];
+		this.L = new int[n + 1];
+		this.I = new int[m];
+		this.n = n;
+		this.m = m;
 	}
 
 	public float[] getC() {
 		return C;
 	}
 
+	public float getC(int index) {
+		return C[index];
+	}
+
 	public int[] getI() {
 		return I;
 	}
 
+	public int getI(int index) {
+		return I[index];
+	}
+
 	public int[] getL() {
 		return L;
+	}
+
+	public int getL(int index) {
+		return L[index];
 	}
 
 	public int getM() {
@@ -60,7 +72,7 @@ public class SparseMatrix {
 		return n;
 	}
 
-	public float[] MultiplyTransposeWithVector(int[] V) {
+	public float[] MultiplyTransposeWithVector(float[] v) {
 		float[] product = new float[n];
 		// Initialise the product vector with 0
 		for (int i = 0; i < n; i++) {
@@ -70,7 +82,7 @@ public class SparseMatrix {
 		// compute the product
 		for (int i = 0; i < n; i++) {
 			for (int j = L[i]; j < L[i + 1]; j++) {
-				product[I[j]] += C[j] * V[i];
+				product[I[j]] += C[j] * v[i];
 			}
 		}
 		// return product
@@ -104,18 +116,18 @@ public class SparseMatrix {
 		return product;
 	}
 
-	private void parse(String file) {
-
+	public void printMatrix() {
+		System.out.println(this.toString());
 	}
 
 	public void setC(float[] c) {
 		C = c;
 	}
 
-	public void setC(int index,float v) {
+	public void setC(int index, float v) {
 		C[index] = v;
 	}
-	
+
 	public void setI(int[] i) {
 		I = i;
 	}
@@ -134,7 +146,7 @@ public class SparseMatrix {
 
 	public String toString() {
 		String str = "";
-		str+="\n" + "C = { ";
+		str += "\n" + "C = { ";
 		for (float c : C)
 			str += c + " ";
 		str += "}\nL = { ";
@@ -145,10 +157,6 @@ public class SparseMatrix {
 			str += i + " ";
 		str += "}\n";
 		return str;
-	}
-
-	public void printMatrix() {
-		System.out.println(this.toString());
 	}
 
 }
