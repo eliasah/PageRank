@@ -7,8 +7,18 @@ public class SparseMatrix {
 	int n;
 	int m;
 
-	public SparseMatrix(float[][] matrice, int m) {
-		this.n = matrice.length;
+	/**
+	 * SparseMatrix Constructor from a matrix representation of the graph
+	 * 
+	 * Complexity : O(n^2)
+	 * 
+	 * @param matrix
+	 *            matrix representation of the graph
+	 * @param m
+	 *            number of non-null elements in the matrix
+	 */
+	public SparseMatrix(float[][] matrix, int m) {
+		this.n = matrix.length;
 		this.m = m;
 		System.out.println("n = " + this.n);
 		System.out.println("m = " + this.m);
@@ -17,12 +27,12 @@ public class SparseMatrix {
 		this.L = new int[n + 1];
 		this.I = new int[m];
 
-		L[0] = 0;
+		L[0] = 0; // default value to L
 		int cpt = 0;
 		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < matrice[i].length; j++) {
-				if (matrice[i][j] != 0) {
-					C[cpt] = matrice[i][j];
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] != 0) {
+					C[cpt] = matrix[i][j];
 					I[cpt] = j;
 					cpt++;
 				}
@@ -72,6 +82,11 @@ public class SparseMatrix {
 		return n;
 	}
 
+	/**
+	 * 
+	 * @param v
+	 * @return
+	 */
 	public float[] MultiplyTransposeWithVector(float[] v) {
 		float[] product = new float[n];
 		// Initialise the product vector with 0
