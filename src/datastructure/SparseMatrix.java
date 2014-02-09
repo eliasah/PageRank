@@ -97,7 +97,7 @@ public class SparseMatrix {
 	 *            integer vector
 	 * @return
 	 */
-	public float[] MultiplyWithVector(int[] V) {
+	public float[] MultiplyWithVector(float[] V) {
 		float[] product = new float[n];
 
 		// Initialise the product vector with 0
@@ -159,4 +159,9 @@ public class SparseMatrix {
 		return str;
 	}
 
+	public float diff(SparseMatrix m2) {
+		float result = 0;
+
+		return result;
+	}
 }

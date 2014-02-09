@@ -1,13 +1,8 @@
 package datastructure;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Vector;
-
-import datastructure.SparseMatrix;
 
 public class SparseMatrixReader {
 
@@ -25,12 +20,9 @@ public class SparseMatrixReader {
 	private void read() {
 		BufferedReader br = null;
 		String sCurrentLine;
-		int n1, n2, s = 0, i = 0, j = 0, k = 0, deg = 0;
+		int n1, n2, s = 0, i = 0, j = 0, deg = 0;
 
 		this.matrix = new SparseMatrix(this.n, this.m);
-		matrix.C = new float[m];
-		matrix.L = new int[n + 1];
-		matrix.I = new int[m];
 
 		matrix.L[0] = 0;
 

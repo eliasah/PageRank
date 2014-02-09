@@ -18,7 +18,7 @@ public class SparseMatrixTest {
 		int[] I = { 2, 3, 0, 2, 0, 1, 4, 1 };
 
 		SparseMatrix M = new SparseMatrix(5, 8);
-		int[] v = { 10, 0, 3, -1, 5 };
+		float[] v = { 10, 0, 3, -1, 5 };
 
 		M.setC(C);
 		M.setL(L);
@@ -92,7 +92,7 @@ public class SparseMatrixTest {
 
 	}
 
-	
+	@Test
 	public void testP2PGnutella() {
 		System.out.println("> Testing SparseMatrixReader on p2p-Gnutella04 : ");
 		SparseMatrixReader s = new SparseMatrixReader(
