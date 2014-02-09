@@ -82,6 +82,7 @@ public class SparseMatrix {
 		// compute the product
 		for (int i = 0; i < n; i++) {
 			for (int j = L[i]; j < L[i + 1]; j++) {
+				// System.out.println("I[" + j + "] = " + I[j]);
 				product[I[j]] += C[j] * v[i];
 			}
 		}
@@ -157,11 +158,5 @@ public class SparseMatrix {
 			str += i + " ";
 		str += "}\n";
 		return str;
-	}
-
-	public float diff(SparseMatrix m2) {
-		float result = 0;
-
-		return result;
 	}
 }

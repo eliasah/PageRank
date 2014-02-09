@@ -4,22 +4,35 @@ import datastructure.SparseMatrix;
 
 public class PageRank {
 
-	int start;
-	float[] pageRankVector;
-	float[] stochVector;
-	SparseMatrix matrix;
-	float epsilon = 0.01F;
+	private float[] pageRankVector;
+	private float[] stochVector;
+	private SparseMatrix matrix;
+	private float epsilon = 0.01F;
 
-	public PageRank(SparseMatrix m, int index) {
+	public PageRank(SparseMatrix m) {
 		int n = m.getN();
 		this.stochVector = new float[n];
-		// for (int i = 0; i < stochVector.length; i++) {
-		// this.stochVector[i] = 1F / (float) n;
-		// }
-		stochVector[index] = 1;
+		for (int i = 0; i < stochVector.length; i++) {
+			this.stochVector[i] = 1F / (float) n;
+		}
+		// stochVector[index] = 1;
 		this.pageRankVector = new float[n];
 		this.matrix = m;
-		this.start = index;
+	}
+
+	public PageRank(SparseMatrix m, float[] z) {
+		this(m);
+		this.stochVector = z;
+	}
+
+	public PageRank(SparseMatrix m, int index, float[] z, float ep) {
+		this(m, z);
+		this.epsilon = ep;
+	}
+
+	public PageRank(SparseMatrix m, float ep) {
+		this(m);
+		this.epsilon = ep;
 	}
 
 	// Cette fonction calcule la norme de la difference de deux vecteurs
@@ -41,15 +54,15 @@ public class PageRank {
 		float[] pageRankN;
 
 		float delta = 1F + epsilon;
-		int cpt = 0;
+		// int cpt = 0;
 		while (delta >= epsilon) {
-			System.out.println(this.PtoString(cpt));
+			// System.out.println(this.PtoString(cpt));
 			pageRankN = matrix.MultiplyTransposeWithVector(pageRankVector);
 			delta = norm(pageRankN, pageRankVector);
 			pageRankVector = pageRankN;
-			cpt++;
+			// cpt++;
 		}
-		System.out.println(this.PtoString(cpt));
+		// System.out.println(this.PtoString(cpt));
 
 	}
 
@@ -57,9 +70,12 @@ public class PageRank {
 	public void computePageRank(int node, int nbPas) {
 		pageRankVector = new float[matrix.getN()];
 		pageRankVector[node] = 1;
+		// int cpt = 0;
 		while (nbPas > 0) {
 			pageRankVector = matrix.MultiplyTransposeWithVector(pageRankVector);
 			nbPas--;
+			// System.out.println("\t" + this.PtoString(cpt));
+			// cpt++;
 		}
 	}
 
@@ -80,5 +96,13 @@ public class PageRank {
 
 	public float[] getPageRank() {
 		return pageRankVector;
+	}
+
+	public float getPageRank(int index) {
+		return pageRankVector[index];
+	}
+
+	public void setZ(float[] v) {
+		this.stochVector = v;
 	}
 }

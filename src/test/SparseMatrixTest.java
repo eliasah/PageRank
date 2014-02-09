@@ -77,8 +77,8 @@ public class SparseMatrixTest {
 		assertEquals(expected.length, result.length);
 
 		for (int i = 0; i < result.length; i++) {
-			// System.out.println(result[i] + "\t" + expected[i]);
-			assertTrue(expected[i] == result[i]);
+			assertTrue(expected[i] + " is different from " + result[i],
+					expected[i] == result[i]);
 		}
 		System.out.println("Test Success");
 	}

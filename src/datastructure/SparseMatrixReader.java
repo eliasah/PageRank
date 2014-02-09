@@ -36,19 +36,19 @@ public class SparseMatrixReader {
 				} else {
 					n1 = Integer.parseInt(tmp[0]);
 					n2 = Integer.parseInt(tmp[1]);
-					matrix.I[j] = n2 - 1;
+					matrix.I[j] = n2;
 					j++;
 					if (s != n1 - 1) {
 						s = n1 - 1;
-						matrix.L[i + 1] = j - 1;
+						matrix.L[i] = j - 1;
 						i++;
 					}
 
 				}
 			}
 			matrix.L[n] = j;
-						
-			j = 0;	
+
+			j = 0;
 			for (i = 0; i < matrix.C.length; i++) {
 				// if (j == matrix.L.length -1 ) break;
 				while (i >= matrix.L[j + 1])
@@ -63,8 +63,9 @@ public class SparseMatrixReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// matrix.printMatrix();
 	}
-	
+
 	public SparseMatrix getMatrix() {
 		return matrix;
 	}
