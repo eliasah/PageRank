@@ -29,8 +29,8 @@ public class SparseMatrix {
 
 		L[0] = 0; // default value to L
 		int cpt = 0;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < matrix[i].length; j++) {
+		for (int i = 0; i < n; i++) { // n iterations
+			for (int j = 0; j < n; j++) { // n iterations
 				if (matrix[i][j] != 0) {
 					C[cpt] = matrix[i][j];
 					I[cpt] = j;
@@ -42,6 +42,14 @@ public class SparseMatrix {
 
 	}
 
+	/**
+	 * SparseMatrix Constructor initialized but empty;
+	 * 
+	 * @param n
+	 *            number of nodes
+	 * @param m
+	 *            number of links
+	 */
 	public SparseMatrix(int n, int m) {
 		this.C = new float[m];
 		this.L = new int[n + 1];
@@ -83,9 +91,11 @@ public class SparseMatrix {
 	}
 
 	/**
+	 * Multiply the transpose by float vector v
 	 * 
 	 * @param v
-	 * @return
+	 *            float array vector
+	 * @return multiplication of the transpose of current matrix by v
 	 */
 	public float[] MultiplyTransposeWithVector(float[] v) {
 		float[] product = new float[n];
@@ -110,8 +120,8 @@ public class SparseMatrix {
 	 * Return the matrix multiplication production with a vector v
 	 * 
 	 * @param v
-	 *            integer vector
-	 * @return
+	 *            float vector
+	 * @return multiplication of the matrix by v
 	 */
 	public float[] MultiplyWithVector(float[] V) {
 		float[] product = new float[n];
