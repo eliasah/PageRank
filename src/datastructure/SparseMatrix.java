@@ -1,12 +1,12 @@
 package datastructure;
 
 public class SparseMatrix {
-	float[] C;
-	int[] L;
-	int[] I;
-	int n;
-	int m;
-	
+	private float[] C;
+	private int[] L;
+	private int[] I;
+	private int n;
+	private int m;
+
 	/**
 	 * SparseMatrix Constructor from a matrix representation of the graph
 	 * 
@@ -161,8 +161,16 @@ public class SparseMatrix {
 		I = i;
 	}
 
+	public void setI(int index, int v) {
+		I[index] = v;
+	}
+
 	public void setL(int[] l) {
 		L = l;
+	}
+
+	public void setL(int index, int v) {
+		L[index] = v;
 	}
 
 	public void setM(int m) {

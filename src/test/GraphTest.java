@@ -14,6 +14,8 @@ import datastructure.GraphReader;
 
 public class GraphTest {
 
+	
+	
 	@Test
 	public void testMultiplyWithVector() {
 		System.out.print("> Testing MultiplyWithVector : ");
@@ -89,7 +91,7 @@ public class GraphTest {
 
 	@Test
 	public void testDummyExemple() {
-		System.out.print("> Testing SparseMatrixReader on exemple.data : ");
+		System.out.print("> Testing on dummy exemple.data : ");
 		GraphReader s = new GraphReader("data/exemple.data", 5, 8);
 		SparseMatrix m = s.getGraph();
 		assertTrue("test dummy example fail",

@@ -1,0 +1,10 @@
+# Exemple avec un graph etoile - nodes = 5, links = 8
+# calcul de PageRank = Chaine de Markov
+0 1
+0 2
+0 3
+0 4
+1 0
+2 0
+3 0
+4 0

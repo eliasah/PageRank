@@ -104,16 +104,14 @@ public class PageRank {
 		int cpt = 0;
 		while (delta >= epsilon) {
 			if (verbose)
-				System.out.println(this.PtoString(cpt));
+				System.out.println("\t" + this.PtoString(cpt));
 			pageRankN = matrix.MultiplyTransposeWithVector(pageRankVector);
 			delta = norm(pageRankN, pageRankVector);
 			pageRankVector = pageRankN;
 			cpt++;
 		}
 		if (verbose) {
-			System.out.println(this.PtoString(cpt));
-			Scanner in = new Scanner(System.in);
-			in.next();
+			System.out.println("\t" + this.PtoString(cpt));
 		}
 	}
 
@@ -143,11 +141,14 @@ public class PageRank {
 
 			pageRankVector = pageRankN;
 			if (verbose) {
-				System.out.println("\t" + this.PtoString(cpt));
+				System.out.println("\t" + this.PtoString(cpt + 1));
 			}
 			if (delta == 0) {
-				System.out.println("> P converge :\n\t"
-						+ this.PtoString(cpt + 1));
+				System.out.println("\t=> P converge apres " + (cpt + 1)
+						+ " pas.");
+				if (verbose)
+					System.out.println("\t" + this.PtoString(cpt + 1));
+
 				break;
 			}
 			cpt++;
