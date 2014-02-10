@@ -1,8 +1,6 @@
 package pagerank;
 
 // import java.text.DecimalFormat;
-import java.util.Scanner;
-
 import datastructure.SparseMatrix;
 
 public class PageRank {

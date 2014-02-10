@@ -7,7 +7,6 @@ import org.junit.Test;
 import pagerank.PageRank;
 import datastructure.Graph;
 import datastructure.GraphReader;
-import datastructure.SparseMatrix;
 
 public class PageRankTest {
 
