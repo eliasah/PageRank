@@ -1,14 +1,24 @@
 package pagerank;
 
+import java.text.DecimalFormat;
+import java.util.Scanner;
+
 import datastructure.SparseMatrix;
 
 public class PageRank {
 
+	private boolean verbose = false;
 	private float[] pageRankVector;
 	private float[] stochVector;
 	private SparseMatrix matrix;
 	private float epsilon = 0.01F;
 
+	/**
+	 * Initialize PageRank with matrix m
+	 * 
+	 * @param m
+	 *            SparseMatrix
+	 */
 	public PageRank(SparseMatrix m) {
 		int n = m.getN();
 		this.stochVector = new float[n];
@@ -20,22 +30,57 @@ public class PageRank {
 		this.matrix = m;
 	}
 
+	/**
+	 * Initialize PageRank with matrix m and a stochastic vector z
+	 * 
+	 * @param m
+	 *            SparseMatrix
+	 * @param z
+	 *            Stochastic vector
+	 */
 	public PageRank(SparseMatrix m, float[] z) {
 		this(m);
 		this.stochVector = z;
 	}
 
-	public PageRank(SparseMatrix m, int index, float[] z, float ep) {
+	/**
+	 * Initialize PageRank with matrix m and stochastic vector z. Set epsilon
+	 * value
+	 * 
+	 * @param m
+	 *            SparseMatrix
+	 * @param z
+	 *            Stochastic vector
+	 * @param ep
+	 *            epsilon
+	 */
+	public PageRank(SparseMatrix m, float[] z, float ep) {
 		this(m, z);
 		this.epsilon = ep;
 	}
 
+	/**
+	 * Initialize PageRank with matrix m and et epsilon value
+	 * 
+	 * @param m
+	 *            SparseMatrix
+	 * @param ep
+	 *            epsilon
+	 */
 	public PageRank(SparseMatrix m, float ep) {
 		this(m);
 		this.epsilon = ep;
 	}
 
-	// Cette fonction calcule la norme de la difference de deux vecteurs
+	/**
+	 * Cette fonction calcule la norme de la difference de deux vecteurs
+	 * 
+	 * @param v1
+	 *            vector 1
+	 * @param v2
+	 *            vector 2
+	 * @return
+	 */
 	public float norm(float[] v1, float[] v2) {
 		int n = v1.length;
 		float[] tmp = new float[n];
@@ -48,61 +93,179 @@ public class PageRank {
 		return (float) Math.sqrt(norm);
 	}
 
-	// Cette fonction calcule le PageRank standard
+	/**
+	 * Cette fonction calcule le PageRank standard
+	 */
 	public void computePageRankStd() {
 		pageRankVector = stochVector;
 		float[] pageRankN;
 
 		float delta = 1F + epsilon;
-		// int cpt = 0;
+		int cpt = 0;
 		while (delta >= epsilon) {
-			// System.out.println(this.PtoString(cpt));
+			if (verbose)
+				System.out.println(this.PtoString(cpt));
 			pageRankN = matrix.MultiplyTransposeWithVector(pageRankVector);
 			delta = norm(pageRankN, pageRankVector);
 			pageRankVector = pageRankN;
-			// cpt++;
+			cpt++;
 		}
-		// System.out.println(this.PtoString(cpt));
-
+		if (verbose) {
+			System.out.println(this.PtoString(cpt));
+			Scanner in = new Scanner(System.in);
+			in.next();
+		}
 	}
 
-	// les indices des sommets commencent par 0
+	/**
+	 * les indices des sommets commencent par 0
+	 * 
+	 * @param node
+	 *            starting node
+	 * @param nbPas
+	 *            number of pace
+	 */
 	public void computePageRank(int node, int nbPas) {
 		pageRankVector = new float[matrix.getN()];
 		pageRankVector[node] = 1;
-		// int cpt = 0;
+		int cpt = 0;
+		if (verbose) {
+			System.out.println("\t" + this.PtoString(cpt));
+			// Scanner in = new Scanner(System.in);
+			// in.next();
+		}
 		while (nbPas > 0) {
 			pageRankVector = matrix.MultiplyTransposeWithVector(pageRankVector);
 			nbPas--;
-			// System.out.println("\t" + this.PtoString(cpt));
-			// cpt++;
+			if (verbose) {
+				System.out.println("\t" + this.PtoString(cpt));
+				// Scanner in = new Scanner(System.in);
+				// in.next();
+			}
+			cpt++;
 		}
 	}
 
-	// Cette fonction calcule le PageRank a partir de zero
-	public void computePageRankZero(int nbPas) {
-		computePageRank(0, nbPas);
+	/**
+	 * Cette fonction calcule le PageRank a partir de zero
+	 * 
+	 * @param nbPas
+	 *            number of pace
+	 */
+	public void computePageRankZero(int start, int nbPas) {
+		computePageRank(start, nbPas);
 	}
 
+	/**
+	 * helper for adding zap factor coeff to pageRank
+	 * 
+	 * @param f
+	 *            zap factor
+	 */
+	private void addZap(float f) {
+		for (int i = 0; i < pageRankVector.length; i++) {
+			this.pageRankVector[i] += f;
+		}
+	}
+
+	/**
+	 * helper for multiplying zap factor coeff with pageRank
+	 * 
+	 * @param f
+	 *            zap factor
+	 */
+	private void multZap(float f) {
+		for (int i = 0; i < pageRankVector.length; i++) {
+			this.pageRankVector[i] *= (1f - f);
+		}
+	}
+
+	/**
+	 * Computer PageRank considering a zap factor
+	 * 
+	 * @param node
+	 *            starting node
+	 * @param zap
+	 *            zap factor
+	 * @param nbPas
+	 *            number of pace
+	 */
+	public void computePangRankWithZap(int node, float zap, int nbPas) {
+		assert (zap >= 0.1F && zap <= 0.2F);
+		pageRankVector = new float[matrix.getN()];
+		pageRankVector[node] = 1;
+		int n = matrix.getN();
+		int cpt = 0;
+		if (verbose) {
+			System.out.println("\t" + this.PtoString(cpt));
+		}
+		while (nbPas > 0) {
+
+			pageRankVector = matrix.MultiplyTransposeWithVector(pageRankVector);
+			multZap(zap);
+			addZap(zap / n);
+			if (verbose) {
+				System.out.println("\t" + this.PtoString(cpt));
+			}
+			nbPas--;
+			cpt++;
+		}
+	}
+
+	/**
+	 * 
+	 * @param j
+	 *            step number
+	 * @return PageRank vector in string format
+	 */
 	public String PtoString(int j) {
+		// DecimalFormat df = new DecimalFormat();
+		// df.setMinimumFractionDigits(5);
 		String str = new String();
-		str += "P(" + j + ") = ( ";
+		str += "P(" + j + ")\t = ( ";
 		for (float i : pageRankVector) {
 			str += i + " ";
+			// str += df.format(i) + " ";
 		}
 
 		return str + ")";
 	}
 
+	/**
+	 * 
+	 * @return PageRank Vector
+	 */
 	public float[] getPageRank() {
 		return pageRankVector;
 	}
 
+	/**
+	 * 
+	 * @param index
+	 *            node
+	 * @return pagerank for given node
+	 */
 	public float getPageRank(int index) {
 		return pageRankVector[index];
 	}
 
+	/**
+	 * Set stochastic vector
+	 * 
+	 * @param v
+	 *            stochastic vector
+	 */
 	public void setZ(float[] v) {
 		this.stochVector = v;
+	}
+
+	/**
+	 * Set verbose mode
+	 * 
+	 * @param bool
+	 *            boolean
+	 */
+	public void setVerbose(boolean bool) {
+		verbose = bool;
 	}
 }

@@ -9,17 +9,17 @@ import datastructure.SparseMatrixReader;
 import pagerank.PageRank;
 
 public class PageRankTest {
-	SparseMatrixReader s = new SparseMatrixReader("data/p2p-Gnutella04.data",
-			10878, 39994);
+	SparseMatrixReader s = new SparseMatrixReader("data/p2p-Gnutella05.data",
+			8846, 31839);
 	SparseMatrix m = s.getMatrix();
 
 	@Test
 	public void testPageRankZero() {
 		System.out.println("> Testing PageRankZero on p2p-Gnutella04.data : ");
 
-		PageRank p = new PageRank(m, 4);
-
-		p.computePageRankZero(20);
+		PageRank p = new PageRank(m, 0);
+		// p.setVerbose(true);
+		p.computePageRankZero(1, 20);
 		float res = p.getPageRank(0);
 
 		System.out.println("PageRankZero : La probabilitŽ d'tre sur 0 est de "
@@ -31,11 +31,12 @@ public class PageRankTest {
 	@Test
 	public void testPageRankStd() {
 		System.out.println("> Testing PageRankStd on p2p-Gnutella04.data : ");
-		PageRank p = new PageRank(m, 0.0001f);
+		PageRank p = new PageRank(m, 0.005f);
+		// p.setVerbose(true);
 		p.computePageRankStd();
-		float res = p.getPageRank(4);
+		float res = p.getPageRank(0);
 
-		System.out.println("PageRankStd : La probabilitŽ d'tre sur 4 est de "
+		System.out.println("PageRankStd : La probabilitŽ d'tre sur 0 est de "
 				+ res);
 
 		assertTrue(true);
@@ -46,6 +47,7 @@ public class PageRankTest {
 		System.out
 				.println("> Testing PageRankWithPace on p2p-Gnutella04.data : ");
 		PageRank p = new PageRank(m, 0);
+		// p.setVerbose(true);
 		p.computePageRank(0, 100);
 
 		float res = p.getPageRank(0);
@@ -55,5 +57,4 @@ public class PageRankTest {
 		assertTrue(true);
 
 	}
-
 }

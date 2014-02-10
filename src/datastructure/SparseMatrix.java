@@ -93,6 +93,8 @@ public class SparseMatrix {
 	/**
 	 * Multiply the transpose by float vector v
 	 * 
+	 * Complexity : O(2*n)
+	 * 
 	 * @param v
 	 *            float array vector
 	 * @return multiplication of the transpose of current matrix by v
@@ -107,7 +109,6 @@ public class SparseMatrix {
 		// compute the product
 		for (int i = 0; i < n; i++) {
 			for (int j = L[i]; j < L[i + 1]; j++) {
-				// System.out.println("I[" + j + "] = " + I[j]);
 				product[I[j]] += C[j] * v[i];
 			}
 		}
@@ -118,6 +119,8 @@ public class SparseMatrix {
 
 	/**
 	 * Return the matrix multiplication production with a vector v
+	 * 
+	 * Complexity : O(2*n)
 	 * 
 	 * @param v
 	 *            float vector

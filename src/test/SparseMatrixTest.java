@@ -3,6 +3,10 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.junit.Test;
 
 import datastructure.SparseMatrix;
@@ -88,7 +92,8 @@ public class SparseMatrixTest {
 		System.out.println("> Testing SparseMatrixReader on exemple.data : ");
 		SparseMatrixReader s = new SparseMatrixReader("data/exemple.data", 5, 8);
 		SparseMatrix m = s.getMatrix();
-		assertTrue(verifyLink(m));
+		assertTrue("test dummy example fail",
+				verifyLink(m, "data/exemple.data"));
 
 	}
 
@@ -98,11 +103,11 @@ public class SparseMatrixTest {
 		SparseMatrixReader s = new SparseMatrixReader(
 				"data/p2p-Gnutella04.data", 10876, 39994);
 		SparseMatrix m = s.getMatrix();
-		assertTrue(verifyLink(m));
+		assertTrue(verifyLink(m, "data/p2p-Gnutella04.data"));
 
 	}
 
-	private boolean verifyLink(SparseMatrix m) {
+	private boolean verifyLink(SparseMatrix m, String file) {
 		boolean verdict = false;
 		System.out.print("\t1. Pick a random index from C : ");
 		int i = (int) (Math.random() * ((m.getM())));
@@ -125,7 +130,31 @@ public class SparseMatrixTest {
 
 		// TODO 3. vérifier dans le fichier que l'arc existe bien.
 
-		verdict = true;
+		BufferedReader br = null;
+		String sCurrentLine;
+		int n1, n2;
+		try {
+			br = new BufferedReader(new FileReader(file));
+
+			while ((sCurrentLine = br.readLine()) != null) {
+				String[] tmp2 = sCurrentLine.split("\\s+");
+				if (sCurrentLine.startsWith("#")) {
+					continue;
+				} else {
+					n1 = Integer.parseInt(tmp2[0]);
+					n2 = Integer.parseInt(tmp2[1]);
+					if (n1 == m.getI(i_index) && n2 == l_index) {
+						verdict = true;
+						break;
+					}
+				}
+			}
+
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return verdict;
 	}
 }
