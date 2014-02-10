@@ -1,6 +1,6 @@
 package pagerank;
 
-import java.text.DecimalFormat;
+// import java.text.DecimalFormat;
 import java.util.Scanner;
 
 import datastructure.SparseMatrix;
@@ -126,21 +126,29 @@ public class PageRank {
 	 *            number of pace
 	 */
 	public void computePageRank(int node, int nbPas) {
-		pageRankVector = new float[matrix.getN()];
-		pageRankVector[node] = 1;
+		pageRankVector = stochVector;
 		int cpt = 0;
 		if (verbose) {
 			System.out.println("\t" + this.PtoString(cpt));
-			// Scanner in = new Scanner(System.in);
-			// in.next();
 		}
+
+		float delta = 1F + epsilon;
+		float[] pageRankN;
+
 		while (nbPas > 0) {
-			pageRankVector = matrix.MultiplyTransposeWithVector(pageRankVector);
+
+			pageRankN = matrix.MultiplyTransposeWithVector(pageRankVector);
 			nbPas--;
+			delta = norm(pageRankN, pageRankVector);
+
+			pageRankVector = pageRankN;
 			if (verbose) {
 				System.out.println("\t" + this.PtoString(cpt));
-				// Scanner in = new Scanner(System.in);
-				// in.next();
+			}
+			if (delta == 0) {
+				System.out.println("> P converge :\n\t"
+						+ this.PtoString(cpt + 1));
+				break;
 			}
 			cpt++;
 		}
@@ -190,7 +198,7 @@ public class PageRank {
 	 * @param nbPas
 	 *            number of pace
 	 */
-	public void computePangRankWithZap(int node, float zap, int nbPas) {
+	public void computePageRankWithZap(int node, float zap, int nbPas) {
 		assert (zap >= 0.1F && zap <= 0.2F);
 		pageRankVector = new float[matrix.getN()];
 		pageRankVector[node] = 1;

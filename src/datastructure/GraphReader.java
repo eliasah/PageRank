@@ -4,13 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class SparseMatrixReader {
+public class GraphReader {
 
-	private SparseMatrix matrix;
+	private Graph g;
 	private int m, n;
 	private String file;
 
-	public SparseMatrixReader(String f, int n, int m) {
+	public GraphReader(String f, int n, int m) {
 		this.file = f;
 		this.n = n;
 		this.m = m;
@@ -22,9 +22,9 @@ public class SparseMatrixReader {
 		String sCurrentLine;
 		int n1, n2, s = 0, i = 0, j = 0, deg = 0;
 
-		this.matrix = new SparseMatrix(this.n, this.m);
+		this.g = new Graph(this.n, this.m);
 
-		matrix.L[0] = 0;
+		g.L[0] = 0;
 
 		try {
 			br = new BufferedReader(new FileReader(file));
@@ -36,37 +36,35 @@ public class SparseMatrixReader {
 				} else {
 					n1 = Integer.parseInt(tmp[0]);
 					n2 = Integer.parseInt(tmp[1]);
-					matrix.I[j] = n2;
+					g.I[j] = n2;
 					j++;
 					if (s != n1 - 1) {
 						s = n1 - 1;
-						matrix.L[i] = j - 1;
+						g.L[i] = j - 1;
 						i++;
 					}
 
 				}
 			}
-			matrix.L[n] = j;
+			g.L[n] = j;
 
 			j = 0;
-			for (i = 0; i < matrix.C.length; i++) {
+			for (i = 0; i < g.C.length; i++) {
 				// if (j == matrix.L.length -1 ) break;
-				while (i >= matrix.L[j + 1])
+				while (i >= g.L[j + 1])
 					j++;
 
-				deg = matrix.L[j + 1] - matrix.L[j];
-				matrix.setC(i, (float) 1 / deg);
-				// System.out.println("i = " + i + " ,j = " + j);
+				deg = g.L[j + 1] - g.L[j];
+				g.setC(i, (float) 1 / deg);
 			}
 
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// matrix.printMatrix();
 	}
 
-	public SparseMatrix getMatrix() {
-		return matrix;
+	public Graph getGraph() {
+		return g;
 	}
 }

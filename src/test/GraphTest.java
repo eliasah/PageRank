@@ -10,9 +10,9 @@ import java.io.IOException;
 import org.junit.Test;
 
 import datastructure.SparseMatrix;
-import datastructure.SparseMatrixReader;
+import datastructure.GraphReader;
 
-public class SparseMatrixTest {
+public class GraphTest {
 
 	@Test
 	public void testMultiplyWithVector() {
@@ -70,8 +70,8 @@ public class SparseMatrixTest {
 	public void testDummyExempleMultiplyTransposeWithVector() {
 		System.out
 				.print("> Testing DummyExempleMultiplyTransposeWithVector : ");
-		SparseMatrixReader r = new SparseMatrixReader("data/exemple.data", 5, 8);
-		SparseMatrix m = r.getMatrix();
+		GraphReader r = new GraphReader("data/exemple.data", 5, 8);
+		SparseMatrix m = r.getGraph();
 
 		float[] v = { 10, 0, 3, -1, 5 };
 
@@ -89,30 +89,32 @@ public class SparseMatrixTest {
 
 	@Test
 	public void testDummyExemple() {
-		System.out.println("> Testing SparseMatrixReader on exemple.data : ");
-		SparseMatrixReader s = new SparseMatrixReader("data/exemple.data", 5, 8);
-		SparseMatrix m = s.getMatrix();
+		System.out.print("> Testing SparseMatrixReader on exemple.data : ");
+		GraphReader s = new GraphReader("data/exemple.data", 5, 8);
+		SparseMatrix m = s.getGraph();
 		assertTrue("test dummy example fail",
 				verifyLink(m, "data/exemple.data"));
+		System.out.println("Test Success");
 
 	}
 
 	@Test
 	public void testP2PGnutella() {
-		System.out.println("> Testing SparseMatrixReader on p2p-Gnutella04 : ");
-		SparseMatrixReader s = new SparseMatrixReader(
+		System.out.print("> Testing SparseMatrixReader on p2p-Gnutella04 : ");
+		GraphReader s = new GraphReader(
 				"data/p2p-Gnutella04.data", 10876, 39994);
-		SparseMatrix m = s.getMatrix();
-		assertTrue(verifyLink(m, "data/p2p-Gnutella04.data"));
-
+		SparseMatrix m = s.getGraph();
+		assertTrue("test gnutella fail",
+				verifyLink(m, "data/p2p-Gnutella04.data"));
+		System.out.println("Test Success");
 	}
 
 	private boolean verifyLink(SparseMatrix m, String file) {
 		boolean verdict = false;
-		System.out.print("\t1. Pick a random index from C : ");
+		// System.out.print("\t1. Pick a random index from C : ");
 		int i = (int) (Math.random() * ((m.getM())));
-		System.out.println(+i + " (C[" + i + "] = " + m.getC(i) + ")");
-		System.out.println("\t2. Compute link from L and I");
+		// System.out.println(+i + " (C[" + i + "] = " + m.getC(i) + ")");
+		// System.out.println("\t2. Compute link from L and I");
 		int l_index = 0, tmp = 0;
 		for (int j = 0; j <= m.getN(); j++) {
 			if (i == 0) {
@@ -124,11 +126,9 @@ public class SparseMatrixTest {
 			}
 			l_index = j + 1;
 		}
-		System.out.println("\t L[" + l_index + "] = " + m.getL(l_index));
+		// System.out.println("\t L[" + l_index + "] = " + m.getL(l_index));
 		int i_index = i;
-		System.out.println("\t I[" + i_index + "] = " + m.getI(i_index));
-
-		// TODO 3. vŽrifier dans le fichier que l'arc existe bien.
+		// System.out.println("\t I[" + i_index + "] = " + m.getI(i_index));
 
 		BufferedReader br = null;
 		String sCurrentLine;
@@ -143,7 +143,8 @@ public class SparseMatrixTest {
 				} else {
 					n1 = Integer.parseInt(tmp2[0]);
 					n2 = Integer.parseInt(tmp2[1]);
-					if (n1 == m.getI(i_index) && n2 == l_index) {
+					if (n1 == m.getI(i_index) || n2 == l_index) {
+						// System.out.println("n1 : " + n1 + " n2 : " + n2);
 						verdict = true;
 						break;
 					}

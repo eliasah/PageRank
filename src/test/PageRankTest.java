@@ -5,20 +5,20 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import datastructure.SparseMatrix;
-import datastructure.SparseMatrixReader;
+import datastructure.GraphReader;
 import pagerank.PageRank;
 
 public class PageRankTest {
-	SparseMatrixReader s = new SparseMatrixReader("data/p2p-Gnutella05.data",
+	GraphReader s = new GraphReader("data/p2p-Gnutella05.data",
 			8846, 31839);
-	SparseMatrix m = s.getMatrix();
+	SparseMatrix m = s.getGraph();
 
 	@Test
 	public void testPageRankZero() {
 		System.out.println("> Testing PageRankZero on p2p-Gnutella04.data : ");
 
 		PageRank p = new PageRank(m, 0);
-		// p.setVerbose(true);
+		p.setVerbose(true);
 		p.computePageRankZero(1, 20);
 		float res = p.getPageRank(0);
 

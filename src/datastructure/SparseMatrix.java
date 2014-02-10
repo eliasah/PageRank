@@ -6,7 +6,7 @@ public class SparseMatrix {
 	int[] I;
 	int n;
 	int m;
-
+	
 	/**
 	 * SparseMatrix Constructor from a matrix representation of the graph
 	 * 
