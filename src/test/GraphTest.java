@@ -72,7 +72,7 @@ public class GraphTest {
 	public void testDummyExempleMultiplyTransposeWithVector() {
 		System.out
 				.print("> Testing DummyExempleMultiplyTransposeWithVector : ");
-		GraphReader r = new GraphReader("data/exemple.data", 5, 8);
+		GraphReader r = new GraphReader("data/exemple1.data", 5, 8);
 		SparseMatrix m = r.getGraph();
 
 		float[] v = { 10, 0, 3, -1, 5 };
@@ -91,11 +91,11 @@ public class GraphTest {
 
 	@Test
 	public void testDummyExemple() {
-		System.out.print("> Testing on dummy exemple.data : ");
-		GraphReader s = new GraphReader("data/exemple.data", 5, 8);
+		System.out.print("> Testing on dummy exemple1.data : ");
+		GraphReader s = new GraphReader("data/exemple1.data", 5, 8);
 		SparseMatrix m = s.getGraph();
 		assertTrue("test dummy example fail",
-				verifyLink(m, "data/exemple.data"));
+				verifyLink(m, "data/exemple1.data"));
 		System.out.println("Test Success");
 
 	}

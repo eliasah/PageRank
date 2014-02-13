@@ -105,7 +105,7 @@ public class Main {
 		System.out.println("> PageRankZero on " + file + " : ");
 		PageRank p = new PageRank(g, epsilon);
 		p.setVerbose(true);
-		p.computePageRank(start, nbPas);
+		p.computePageRank(nbPas);
 	}
 
 	private static void pageRankWithZapFactor(String file, int n, int m,
@@ -124,6 +124,6 @@ public class Main {
 		System.out.println("> PageRankZero on " + file + " : ");
 		PageRank p = new PageRank(g, epsilon);
 		p.setVerbose(true);
-		p.computePageRankWithZap(start, zap, nbPas);
+		p.computePageRankWithZap(zap, nbPas);
 	}
 }

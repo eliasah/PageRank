@@ -115,13 +115,10 @@ public class PageRank {
 
 	/**
 	 * les indices des sommets commencent par 0
-	 * 
-	 * @param node
-	 *            starting node
 	 * @param nbPas
 	 *            number of pace
 	 */
-	public void computePageRank(int node, int nbPas) {
+	public void computePageRank(int nbPas) {
 		pageRankVector = stochVector;
 		int cpt = 0;
 		if (verbose) {
@@ -144,9 +141,9 @@ public class PageRank {
 			if (delta == 0) {
 				System.out.println("\t=> P converge apres " + (cpt + 1)
 						+ " pas.");
-				if (verbose)
+				if (verbose) {
 					System.out.println("\t" + this.PtoString(cpt + 1));
-
+				}
 				break;
 			}
 			cpt++;
@@ -160,7 +157,10 @@ public class PageRank {
 	 *            number of pace
 	 */
 	public void computePageRankZero(int start, int nbPas) {
-		computePageRank(start, nbPas);
+		int n = matrix.getN();
+		stochVector = new float[n];
+		stochVector[start] = 1;
+		computePageRank(nbPas);
 	}
 
 	/**
@@ -190,30 +190,43 @@ public class PageRank {
 	/**
 	 * Computer PageRank considering a zap factor
 	 * 
-	 * @param node
-	 *            starting node
 	 * @param zap
 	 *            zap factor
 	 * @param nbPas
 	 *            number of pace
 	 */
-	public void computePageRankWithZap(int node, float zap, int nbPas) {
+	public void computePageRankWithZap(float zap, int nbPas) {
 		assert (zap >= 0.1F && zap <= 0.2F);
-		pageRankVector = new float[matrix.getN()];
-		pageRankVector[node] = 1;
+		float delta = 1 - epsilon;
+		float[] pageRankN = new float[matrix.getN()];
+		pageRankVector = stochVector;
 		int n = matrix.getN();
 		int cpt = 0;
+
 		if (verbose) {
 			System.out.println("\t" + this.PtoString(cpt));
 		}
+
 		while (nbPas > 0) {
+
+			if (delta == 0) {
+				System.out.println("\t=> P converge apres " + (cpt + 1)
+						+ " pas.");
+				if (verbose)
+					System.out.println("\t" + this.PtoString(cpt + 1));
+				break;
+			}
 
 			pageRankVector = matrix.MultiplyTransposeWithVector(pageRankVector);
 			multZap(zap);
 			addZap(zap / n);
+			delta = norm(pageRankN, pageRankVector);
+			pageRankN = pageRankVector;
+
 			if (verbose) {
-				System.out.println("\t" + this.PtoString(cpt));
+				System.out.println("\t" + this.PtoString(cpt + 1));
 			}
+
 			nbPas--;
 			cpt++;
 		}

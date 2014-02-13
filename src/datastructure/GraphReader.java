@@ -17,6 +17,10 @@ public class GraphReader {
 		read();
 	}
 
+	/**
+	 * 
+	 * Parse file to construct Graph. Complexity : O(n + m)
+	 */
 	private void read() {
 		BufferedReader br = null;
 		String sCurrentLine;
@@ -24,11 +28,12 @@ public class GraphReader {
 
 		this.g = new Graph(this.n, this.m);
 
-		g.setL(0,0);
+		g.setL(0, 0);
 
 		try {
 			br = new BufferedReader(new FileReader(file));
 
+			// cette boucle est en O(m)
 			while ((sCurrentLine = br.readLine()) != null) {
 				String[] tmp = sCurrentLine.split("\\s+");
 				if (sCurrentLine.startsWith("#")) {
@@ -49,6 +54,8 @@ public class GraphReader {
 			g.setL(n, j);
 
 			j = 0;
+
+			// cette boucle est en O(n)
 			for (i = 0; i < g.getC().length; i++) {
 				// if (j == matrix.L.length -1 ) break;
 				while (i >= g.getL(j + 1))

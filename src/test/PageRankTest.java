@@ -19,7 +19,7 @@ public class PageRankTest {
 				.println("> Testing PageRank on a graph with a well (exemple2)");
 		PageRank p = new PageRank(g, 0.001f);
 		// p.setVerbose(true);
-		p.computePageRank(0, 1000);
+		p.computePageRank(1000);
 
 		assertTrue(true);
 	}
@@ -31,8 +31,8 @@ public class PageRankTest {
 		System.out
 				.println("> Testing PageRank on a graph with a well (exemple3)");
 		PageRank p = new PageRank(g, 0.00001f);
-		// p.setVerbose(true);
-		p.computePageRank(0, 1000);
+		p.setVerbose(true);
+		p.computePageRank(1000);
 		assertTrue(true);
 	}
 
@@ -45,7 +45,7 @@ public class PageRankTest {
 				.println("> Testing PageRank on a graph with a well (exemple4)");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 1000);
+		p.computePageRank(1000);
 		assertTrue(true);
 	}
 
@@ -57,7 +57,7 @@ public class PageRankTest {
 		System.out.println("> Testing PageRank on a default graph (exemple5)");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(1, 1000);
+		p.computePageRank(1000);
 		assertTrue(true);
 	}
 
@@ -69,7 +69,7 @@ public class PageRankTest {
 		System.out.println("> Testing PageRank on a symetric graph (exemple6)");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 1000);
+		p.computePageRank(1000);
 		assertTrue(true);
 	}
 
@@ -82,7 +82,7 @@ public class PageRankTest {
 				.println("> Testing PageRank on a graph with cycle (exemple7)");
 		PageRank p = new PageRank(g);
 		p.setVerbose(true);
-		p.computePageRank(0, 6);
+		p.computePageRank(6);
 		assertTrue(true);
 	}
 
@@ -94,7 +94,7 @@ public class PageRankTest {
 		System.out.println("> Testing PageRank on a star graph (star.data)");
 		PageRank p = new PageRank(g);
 		p.setVerbose(true);
-		p.computePageRank(0, 6);
+		p.computePageRank(6);
 		assertTrue(true);
 	}
 
@@ -135,22 +135,31 @@ public class PageRankTest {
 	}
 
 	@Test
-	public void testPageRankWithPace() {
+	public void testPageRankGnutella04() {
 		GraphReader s = new GraphReader("data/p2p-Gnutella04.data", 10878,
 				39994);
 		Graph g = s.getGraph();
 		System.out
-				.println("> Testing PageRankWithPace on p2p-Gnutella04.data : ");
-		PageRank p = new PageRank(g, 0);
+				.println("> Testing PageRank with pace on p2p-Gnutella04.data : ");
+		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
-
-		float res = p.getPageRank(0);
-		System.out
-				.println("PageRank with pace 100 : La probabilitŽ d'tre sur 0 est de "
-						+ res);
+		p.computePageRank(100);
+		// System.out.println(p.PtoString(90));
 		assertTrue(true);
+	}
 
+	@Test
+	public void testPageRankGnutella04Zap() {
+		GraphReader s = new GraphReader("data/p2p-Gnutella04.data", 10878,
+				39994);
+		Graph g = s.getGraph();
+		System.out
+				.println("> Testing PageRank with pace on p2p-Gnutella04.data : ");
+		PageRank p = new PageRank(g);
+		// p.setVerbose(true);
+		p.computePageRankWithZap(0.12f, 100);
+		// System.out.println(p.getPageRank(0));
+		assertTrue(true);
 	}
 
 	@Test
@@ -161,7 +170,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella05.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 
@@ -173,7 +182,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella06.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 
@@ -185,7 +194,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella08.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 
@@ -197,7 +206,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella09.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 
@@ -210,7 +219,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella24.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 
@@ -223,7 +232,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella25.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 
@@ -236,7 +245,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella30.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 
@@ -249,7 +258,7 @@ public class PageRankTest {
 				.println("> Testing PageRank with pace on p2p-Gnutella31.data : ");
 		PageRank p = new PageRank(g);
 		// p.setVerbose(true);
-		p.computePageRank(0, 10000);
+		p.computePageRank(10000);
 		assertTrue(true);
 	}
 

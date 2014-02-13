@@ -93,7 +93,7 @@ public class SparseMatrix {
 	/**
 	 * Multiply the transpose by float vector v
 	 * 
-	 * Complexity : O(2*n)
+	 * Complexity : O(m)
 	 * 
 	 * @param v
 	 *            float array vector
@@ -101,10 +101,6 @@ public class SparseMatrix {
 	 */
 	public float[] MultiplyTransposeWithVector(float[] v) {
 		float[] product = new float[n];
-		// Initialise the product vector with 0
-		for (int i = 0; i < n; i++) {
-			product[i] = 0;
-		}
 
 		// compute the product
 		for (int i = 0; i < n; i++) {
@@ -120,7 +116,7 @@ public class SparseMatrix {
 	/**
 	 * Return the matrix multiplication production with a vector v
 	 * 
-	 * Complexity : O(2*n)
+	 * Complexity : O(m)
 	 * 
 	 * @param v
 	 *            float vector
@@ -129,14 +125,9 @@ public class SparseMatrix {
 	public float[] MultiplyWithVector(float[] V) {
 		float[] product = new float[n];
 
-		// Initialise the product vector with 0
-		for (int i = 0; i < n; i++) {
-			product[i] = 0;
-		}
-
 		// compute the product
 		for (int i = 0; i < n; i++) {
-			for (int j = L[i]; j <= L[i + 1] - 1; j++) {
+			for (int j = L[i]; j < L[i + 1]; j++) {
 				product[i] += C[j] * V[I[j]];
 			}
 		}
