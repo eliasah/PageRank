@@ -1,7 +1,7 @@
 package pagerank;
 
 // import java.text.DecimalFormat;
-import datastructure.SparseMatrix;
+import model.SparseMatrix;
 
 public class PageRank {
 

@@ -2,13 +2,12 @@ package main;
 
 import java.util.Scanner;
 
+import model.Graph;
 import pagerank.PageRank;
-import datastructure.Graph;
-import datastructure.GraphReader;
+import controler.GraphReader;
 
 /**
- * @author Abou Haydar Elias <abouhaydar.elias@gmail.com> , Ben Hadj Ali
- *         <benelhadj-ali@hotmail.fr>
+ * @author Abou Haydar Elias <abouhaydar.elias@gmail.com>
  * 
  */
 public class Main {
@@ -19,9 +18,10 @@ public class Main {
 		float epsilon;
 		String file;
 
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
 
-		System.out.println("Entrer le nom d'un fichier de graphe en entrée :");
+		System.out.println("Entrer le nom d'un fichier de graphe en entree :");
 		file = in.nextLine();
 		System.out.println("nom du fichier = " + file);
 
@@ -77,9 +77,9 @@ public class Main {
 	private static void pageRankZero(String file, int n, int m, float epsilon) {
 		GraphReader s = new GraphReader(file, n, m);
 		Graph g = s.getGraph();
-
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
-		System.out.println("Entrer le numero de noeud de départ :");
+		System.out.println("Entrer le numero de noeud de depart :");
 		int start = in.nextInt();
 		System.out.println("Entrer le nombre de pas :");
 		int nbPas = in.nextInt();
@@ -96,9 +96,8 @@ public class Main {
 		GraphReader s = new GraphReader(file, n, m);
 		Graph g = s.getGraph();
 
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
-		System.out.println("Entrer le numero de noeud de départ :");
-		int start = in.nextInt();
 		System.out.println("Entrer le nombre de pas :");
 		int nbPas = in.nextInt();
 
@@ -113,9 +112,9 @@ public class Main {
 		GraphReader s = new GraphReader(file, n, m);
 		Graph g = s.getGraph();
 
+		@SuppressWarnings("resource")
 		Scanner in = new Scanner(System.in);
-		System.out.println("Entrer le numero de noeud de départ :");
-		int start = in.nextInt();
+
 		System.out.println("Entrer le nombre de pas :");
 		int nbPas = in.nextInt();
 		System.out.println("Entrer le facteur Zap entre 0.1 et 0.2");
